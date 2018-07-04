@@ -44,29 +44,6 @@ void preorder(struct node *root){
   }
 }
 
-void levelOrder(struct node *root){
-  struct node *temp;
-  //int l=0,lef=0,rit = 0;
-  temp = (struct node*)malloc(sizeof(struct node));
-  queue < struct node* > q;
-  q.push(root);
-  while(!q.empty()){
-    temp = q.front();
-    q.pop();
-    //cout <<temp->data <<" level " <<l <<" leftLevel " << lef << " rightLevel " << rit <<endl;
-    cout <<temp->data <<" ";
-    if(temp->left){
-      q.push(temp->left);
-      //lef++;
-    }
-    if(temp->right){
-      q.push(temp->right);
-      //rit++;
-    }
-    //l++;
-  }
-}
-
 int main(){
   int n,i,j;
   cin >>n;
