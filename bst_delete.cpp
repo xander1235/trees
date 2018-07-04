@@ -33,37 +33,34 @@ struct node* bst(struct node *root,int data){
   return root;
 }
 
-void deletes(struct node *root,int data){
-  struct node *temp;
-  temp = (struct node*)malloc(sizeof(struct node));
+struct node* deletes(struct node *root,int data){
   if(!root){
-    cout <<"not a element in a tree" <<endl;
-    return;
+    return root;
+  }
+  if(root->data > data){
+    root->left = deletes(root->left,data);
+  }
+  if(root->data < data){
+    root->right = deletes(root->right,data);
   }
   else{
-    if(root->data == data){
-      //one child
-      if(root->left && root->right==NULL){
-        temp = root->left->left;
-        root->left = NULL;
-        root = temp;
-      }
-      else if(root->right && root->left == NULL){
-        temp = root->right;
-        root = temp;
-      }
-      //two childs
-
+    if(root->left == NULL && root->right == NULL){
+      root = NULL;
     }
-    else if(root->data > data){
-      if(root->left){
-        deletes(root->left,data);
-      }
+    else if(root->right==NULL){
+      temp = root;
+      root = root->left;
+      free(temp);
+    }
+    else if(root->left==NULL){
+      temp = root;
+      root = root->right;
+      free(temp);
     }
     else{
-      if(root->right){
-        deletes(root->right,data);
-      }
+      temp = Findmax(root->left);
+      root->data = temp->data;
+      root->left = deletes(root->left,temp->data);
     }
   }
 }
