@@ -65,8 +65,8 @@ int main(){
     cin >>j;
     root = bst(root,j);
   }
-  preorder(root);
-  //levelOrder(root);
+  //preorder(root);
+  levelOrder(root);
   cout <<endl;
   return 0;
 }
