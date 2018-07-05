@@ -54,9 +54,11 @@ struct node* deletes(struct node *root,int data){
   }
   if(root->data > data){
     root->left = deletes(root->left,data);
+    return root;
   }
   if(root->data < data){
     root->right = deletes(root->right,data);
+    return root;
   }
   else{
     //if(root->left == NULL && root->right == NULL){
