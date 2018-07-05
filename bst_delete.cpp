@@ -33,7 +33,22 @@ struct node* bst(struct node *root,int data){
   return root;
 }
 
+struct node* findMax(struct node *root){
+  if(!root){
+    return root;
+  }
+  else if(root->right == NULL){
+    return root;
+  }
+  else{
+    return findMax(root->right);
+  }
+
+}
+
 struct node* deletes(struct node *root,int data){
+  struct node *temp;
+  temp = (struct node*)malloc(sizeof(struct node));
   if(!root){
     return root;
   }
@@ -44,23 +59,27 @@ struct node* deletes(struct node *root,int data){
     root->right = deletes(root->right,data);
   }
   else{
-    if(root->left == NULL && root->right == NULL){
-      root = NULL;
+    //if(root->left == NULL && root->right == NULL){
+    //  root = NULL;
+    //  return root;
+    //}
+    if(root->left && root->right){
+      temp = findMax(root->left);
+      root->data = temp->data;
+      root->left = deletes(root->left,temp->data);
+      return root;
     }
     else if(root->right==NULL){
       temp = root;
       root = root->left;
       free(temp);
+      return root;
     }
     else if(root->left==NULL){
       temp = root;
       root = root->right;
       free(temp);
-    }
-    else{
-      temp = Findmax(root->left);
-      root->data = temp->data;
-      root->left = deletes(root->left,temp->data);
+      return root;
     }
   }
 }
@@ -79,13 +98,14 @@ void preorder(struct node *root){
 int main(){
   int n,i,j,data;
   cin >>n;
-  struct node *root=NULL;
+  struct node *root=NULL,*temp = NULL;
   for(i=0;i<n;i++){
     cin >>j;
     root = bst(root,j);
   }
   cin >>data;
-  deletes(root,data);
+  temp = root;
+  deletes(temp,data);
   preorder(root);
   //levelOrder(root);
   cout <<endl;
