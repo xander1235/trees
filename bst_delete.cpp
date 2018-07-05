@@ -100,14 +100,13 @@ void preorder(struct node *root){
 int main(){
   int n,i,j,data;
   cin >>n;
-  struct node *root=NULL,*temp = NULL;
+  struct node *root=NULL;
   for(i=0;i<n;i++){
     cin >>j;
     root = bst(root,j);
   }
   cin >>data;
-  temp = root;
-  deletes(temp,data);
+  deletes(root,data);
   preorder(root);
   //levelOrder(root);
   cout <<endl;
