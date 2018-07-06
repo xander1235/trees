@@ -1,7 +1,7 @@
 #include<iostream>
 #include<stdio.h>
 #include<cstdlib>
-#include<stack>
+#include<queue>
 #include<map>
 #include<vector>
 
@@ -66,34 +66,30 @@ int main()
 
 void bottomView(struct Node *root){
   map < int,vector <int> > m;
-  stack<struct Node*> s;
-  stack<int> l;
+  queue<struct Node*> s;
+  queue<int> l;
   struct Node *temp;
   temp = (struct Node*)malloc(sizeof(struct Node));
   int i,level = 0;
   if(!root){
     return;
   }
-  while(1){
-    while(root){
-      s.push(root);
-      l.push(level);
-      m[level].push_back(root->data);
-      root = root->left;
-      level--;
+  s.push(root);
+  l.push(level);
+  while(!s.empty()){
+    root = s.front();
+    level = l.front();
+    //cout <<level <<" " <<root->data <<endl;
+    s.pop();
+    l.pop();
+    m[level].push_back(root->data);
+    if(root->left){
+      s.push(root->left);
+      l.push(level-1);
     }
-    if(s.empty()){
-      break;
-    }
-    else{
-      temp = s.top();
-      level = l.top();
-      //cout <<level <<" " <<temp->data <<endl;
-      l.pop();
-      s.pop();
-      root = temp;
-      root = root->right;
-      level++;
+    if(root->right){
+      s.push(root->right);
+      l.push(level+1);
     }
   }
   map <int,vector <int> > :: iterator it;
