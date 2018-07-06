@@ -1,8 +1,9 @@
 #include <iostream>
 #include<stdio.h>
-#include<queue>
+#include<stack>
 #include<cstdlib>
 #include<map>
+#include<vector>
 using namespace std;
 
 /* A binary tree node has data, pointer to left child
@@ -31,7 +32,7 @@ struct Node* newNode(int data)
 /* Driver program to test size function*/
 int main()
 {
-  int t;
+  int t,K=0;
   struct Node *child;
   scanf("%d", &t);
   while (t--)
@@ -69,5 +70,38 @@ int main()
 }
 
 bool isBST(struct Node *root){
-  
+  if(!root){
+    return 1;
+  }
+  int i,k=1;
+  struct Node *temp;
+  temp = (struct Node*)malloc(sizeof(struct Node));
+  stack < struct Node* > s;
+  vector < int > v;
+  while(1){
+    while(root){
+      s.push(root);
+      root = root->left;
+    }
+    if(s.empty()){
+      break;
+    }
+    else{
+      temp = s.top();
+      s.pop();
+      v.push_back(temp->data);
+      root = temp;
+      root = root->right;
+    }
+  }
+  for(i=0;i<v.size()-1;i++){
+    if(v[i]<v[i+1]){
+      k=1;
+    }
+    else{
+      k=0;
+      break;
+    }
+  }
+  return k;
 }
